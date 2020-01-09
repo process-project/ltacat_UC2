@@ -1,0 +1,278 @@
+a:link,
+a:visited ,
+a:hover {
+    color: #F19F4D;
+}
+
+.footer {
+    margin-top: 8px;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    border-top: solid 1px #EEE;
+    color: #4F6A92;
+}
+
+.level {
+    opacity: 1;
+    height: 32px;
+    width: 32px;
+    background: #F25C05;
+    border-radius: 50%;
+    display: inline-block;
+    color: #ffffff;
+    padding-top: 8px;
+    font-size: 12px;
+    text-align: center;
+    padding-left: 0 !important;
+    margin: 6px 0 10px 0;
+}
+
+.search-bar {
+    width: 500px;
+    position: relative;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 8px;
+    top: -20px;
+}
+
+input[type="search"]:focus {
+    border-color: #CFD7E6;
+    box-shadow: 0 0 4px #F25C05 !important;
+}
+
+.bar {
+    position: relative;
+    background: #EEF1F6;
+    border-radius: 4px;
+}
+
+.bar.bar-1 {
+    background: #F25C05;
+}
+
+.bar.bar-2 {
+    background: #EEF1F6;
+}
+
+.page-footer {
+  background-color: #002E49;
+  border: none;
+  color: #FFFFFF;
+  margin-top: 16px;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  padding: 8px;
+}
+
+.slds-page-header {
+  background-color: #002E49;
+    border: none;
+    color: #FFFFFF;
+    margin-top: -16px;
+}
+
+.slds-page-header__title {
+    font-size: 48px;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+}
+
+body{
+  max-width: 1080px;
+  margin:0px auto !important;
+  padding: 8px;
+  float: none !important;
+  font-family: "Arial, Helvetica, sans-serif;
+}
+html {
+  background-color: #E9E9E9;
+}
+
+.reacttable {
+  font-size: 12px;
+}
+
+span.subsup {
+position: relative;
+}
+
+span.subsup sup {
+position: absolute;
+left: 0.3em;
+top: 0.4em;
+font-size: .75em;
+}
+
+span.subsup sub {
+position: absolute;
+left: 0.3em;
+bottom: -0.3em;
+font-size: .75em;
+}
+
+.supsub {
+  display: inline-block;
+}
+
+.supsub sup,
+.supsub sub {
+  position: relative;
+  display: block;
+  font-size: .75em;
+  line-height: 1.2;
+}
+
+.supsub sub {
+  top: .4em;
+}
+.supsub sup {
+  top: .3em;
+}
+
+/* STANDARD TABLE FORMAT STYLES
+ *   ----------------------------------------------------*/
+table.standard {
+  border:0; width:98%;
+}
+
+table.standard th {
+  background:#fafafa;
+  border:1px solid #e1e1e1;
+  border-width:1px 0;
+  text-align:left;
+  padding:5px;
+}
+
+table.standard td {
+  padding:3px 5px;
+  vertical-align:top;
+}
+
+table.standard tr.alt {
+  background: #FBFBFB;
+}
+
+table.standard tr:hover td {
+  background:#f4f4f4;
+}
+
+tbody.selectcol {
+  vertical-align: top;
+}
+
+/* begin pagination button */
+.pagination>li.active>a {
+  background: #0E65B2;
+  color: #fff;
+}
+.pagination>li.active:hover>a {
+  background: #0C518E;
+  color: #fff;
+}
+/* end pagination button */
+
+.logo {
+	margin-top: 60px;
+	margin-bottom: 40px;
+	width: 100%;
+}
+.fund_logo	{
+  padding: 10px;
+}
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  min-height: 60px;
+  background: white;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.flex-item {
+  margin: auto;
+}
+.flex-container img {
+  height: 60px;
+}
+
+/* begin custom bootstrap buttons */
+.btn-submit {
+    background: #4CAE4C;
+    border-color: #4CAE4C;
+    color: #FFFFFF;
+    width: 100%;
+    outline:none !important;
+}
+
+.btn-viscol {
+    background: #0E65B2;
+    border-color: #0E65B2;
+    color: #FFFFFF;
+    outline:none !important;
+}
+
+.btn-viscol:hover {
+    background: #0C518E;
+    border-color: #0C518E;
+    color: #FFFFFF;
+    outline:none !important;
+}
+.btn-viscol:active {
+    background: #0A3D6A;
+    border-color: #0A3D6A;
+    color: #FFFFFF;
+    outline:none !important;
+}
+.btn-viscol:focus {
+    color: #FFFFFF;
+    outline:none !important;
+}
+.btn-search {
+    background: #F19F4D;
+    border-color: #F19F4D;
+    color: #FFFFFF;
+}
+
+.btn-search:hover {
+    background: #C17F3D;
+    border-color: #C17F3D;
+    color: #FFFFFF;
+}
+.btn-search:active {
+    background: #915F2D;
+    border-color: #915F2D;
+    color: #FFFFFF;
+}
+.btn-search:focus {
+    color: #FFFFFF;
+}
+.btn-infbtn {
+    background: #0E65B2;
+    border-color: #0E65B2;
+    color: #FFFFFF;
+}
+
+.btn-infbtn:hover {
+    background: #0C518E;
+    border-color: #0C518E;
+    color: #FFFFFF;
+}
+.btn-infbtn:active {
+    background: #0A3D6A;
+    border-color: #0A3D6A;
+    color: #FFFFFF;
+}
+.btn-infbtn:focus {
+    color: #FFFFFF;
+}
+/* end custom bootstrap buttons */
+.my-modal {
+    width: 45% !important;
+    max-width: 1080px;
+    min-width: 600px;
+} 
+
