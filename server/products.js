@@ -13,22 +13,22 @@ let findAll = async (req, res, next) => {
   max = req.query.max,
   values = [];
   
-  let sql = `SELECT
-nr_subbands, u.observation ||'-'|| u.SUBARRAYPOINTING lid, p.DECLINATION, p.RIGHTASCENSION, o.STARTTIME, o.ENDTIME, o.OBSERVATIONID
-FROM
-(
-SELECT
-observation,
-SUBARRAYPOINTING,
-count(uri) AS nr_subbands
-FROM
-AWOPER.CorrelatedDataProduct p
-JOIN awoper.FileObject fo ON fo.DATA_OBJECT = p.OBJECT_ID
-GROUP BY observation, SUBARRAYPOINTING
+    let sql = `SELECT
+    nr_subbands, u.observationId, u.processIdentifier ||'-'|| sp.OBJECT_ID lid, p.DECLINATION, p.RIGHTASCENSION, u.STARTTIME, u.ENDTIME
+    FROM
+    (
+ SELECT count(fo.URI) AS nr_subbands,  MIN(dp.startTime) AS startTime, MAX(dp.endTime) AS endTime, pr."observationId" AS observationId,  pr."processIdentifier" AS processIdentifier, dp.subArrayPointingIdentifier AS subArrayPointingIdentifier
+ FROM AWOPER.CorrelatedDataProduct dp,
+ AWOPER.FileObject fo,
+ AWOPER."Process+" pr
+ WHERE dp.processIdentifier = pr."processIdentifier"
+ AND fo.data_object = dp.object_id
+ AND dp.isValid> 0
+ GROUP BY pr."processIdentifier", pr."observationId", dp.subArrayPointingIdentifier
+ HAVING COUNT(fo.URI) = 30 OR COUNT(fo.URI) = 237
 ) u
-JOIN awoper.SubArrayPointing sp ON u.SUBARRAYPOINTING = sp.OBJECT_ID
+JOIN awoper.SubArrayPointing sp ON u.subArrayPointingIdentifier = sp.subArrayPointingIdentifier
 JOIN awoper.Pointing p ON p.OBJECT_ID = sp.POINTING
-JOIN awoper.observation o ON o.object_id = u.observation
 `
       await db.query(sql, values.concat([]))
     .then(products => {
@@ -46,7 +46,7 @@ let findByProdId = (req, res, next) => {
   max = req.query.max,
   lid = req.params.lid,
   lidArray = lid.split('-'),
-  bindings = {obs: { dir: oracledb.BIND_IN, val: lidArray[0], type: oracledb.STRING },
+  bindings = {pid: { dir: oracledb.BIND_IN, val: lidArray[0], type: oracledb.STRING },
               sap: { dir: oracledb.BIND_IN, val: lidArray[1], type: oracledb.STRING }},
   whereParts = [],
   values = [];
@@ -57,7 +57,7 @@ FROM
 AWOPER.CorrelatedDataProduct p
 JOIN awoper.FileObject fo ON fo.DATA_OBJECT = p.OBJECT_ID
 WHERE
-observation=hextoraw(:obs)
+processIdentifier=to_number(:pid)
 AND
 subarraypointing=hextoraw(:sap)
 `
