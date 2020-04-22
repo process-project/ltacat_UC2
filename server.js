@@ -17,6 +17,7 @@ let express = require('express'),
 app.set('port', process.env.PORT || 5000);
 
 app.use(compression());
+app.use(express.json())
 
 app.use('/', express.static(__dirname + '/www'));
 
@@ -61,11 +62,23 @@ app.get('/products', function(req,res) {
    }]
   res.json({products});
 });
-app.get('/product/:lid', function(res, req) {
+app.get('/product/:lid', function(req, res) {
+  console.log(req.params);
   const products = [{
     URI: 'https://someuri/' + req.params.lid
   }];
   res.json({"products": products});
+});
+
+app.post('/sessions', function(req, res) {
+  console.log(req.body);
+  res.json({
+    pipeline: req.body.pipeline,
+    config: req.body.config,
+    pipeline_version: 'v0.0.0',
+    status: 'MOCKED',
+    pipeline_response: 'Mocked pipeline response'
+  });
 });
 app.get('/pipelineschemas', function(req,res) {
   const pipelineschemas = {
