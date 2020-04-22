@@ -253,6 +253,7 @@ class PipelineConfigurator extends React.Component {
     const email = this.props.email
     const description = this.props.description
     const submitEndpoint = '/sessions'
+    let observation
     fetch('/product/' + this.props.lid, {
       headers: {
           'content-type': 'application/json'
@@ -262,20 +263,31 @@ class PipelineConfigurator extends React.Component {
                          else
                            throw 'Server returned ' + response.statusText})
       .then(srmuris => {
-        const body = {pipeline, email, description, config: this.state.config, observation: srmuris.products.map((d) => d.URI).join('|')};
-        return fetch(submitEndpoint, {
-          body: JSON.stringify(body),
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, cors, *same-origin
-          headers: {
-            'content-type': 'application/json'
-          },
-        })
+        observation = srmuris.products.map((d) => d.URI).join('|');
       })
+    fetch('/product/' + this.props.lid2, {
+            headers: {
+            'content-type': 'application/json'
+            }
+            }).then(response => {if (response.ok)
+                    return response.json()
+                    else
+                    throw 'Server returned ' + response.statusText})
+      .then(srmuris => {
+            const body = {pipeline, email, description, config: this.state.config, observation, observation2: srmuris.products.map((d) => d.URI).join('|')};
+            return fetch(submitEndpoint, {
+                         body: JSON.stringify(body),
+                         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                         mode: 'cors', // no-cors, cors, *same-origin
+                         headers: {
+                         'content-type': 'application/json'
+                    },
+                })
+            })
       .then(response => {if (response.ok)
-                           return response.json()
-                         else
-                           throw 'Server returned ' + response.statusText})
+            return response.json()
+            else
+            throw 'Server returned ' + response.statusText})
       .then(this.processResponse) // parses response to JSON
       .catch(this.handleError)
   }
@@ -515,11 +527,42 @@ class RangeFilter extends React.Component {
     }
 };
 */
+
+class ProductChooser extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+    
+    render() {
+        let selectRow = {
+          mode: 'radio',
+          clickToSelect: true,
+          hideSelectAll: true,
+          onSelect: this.props.onSelect
+        };
+
+        const pagination = paginationFactory({
+            page: 1,
+            sizePerPage: 5
+        });
+
+        return (
+            <BootstrapTable keyField = 'LID'
+                data = { this.props.data }
+                columns = { this.props.columns }
+                selectRow = { selectRow }
+                pagination={ pagination }
+                filter={ filterFactory() } />
+        );
+    }
+}
+
 export default class FRBTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showModal: false,
       meas: {},
+      meas2: {},
       page: 1,
       sizePerPage: 25,
       // dropdown
@@ -542,7 +585,10 @@ export default class FRBTable extends React.Component {
     this.getPipelines = this.getPipelines.bind(this);
     this.updateEmail = this.updateEmail.bind(this);
     this.updateJobDescription = this.updateJobDescription.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleSelect2 = this.handleSelect2.bind(this);
   }
+    
   componentDidMount() {
     this.getPipelines();
   }
@@ -604,6 +650,10 @@ export default class FRBTable extends React.Component {
       this.setState({ showModal: true,
                       meas });
   }
+
+  openProcessingDialog(e) {
+      this.setState({ showModal: true });
+   }
 
   changeStateAttributeValue(stateName, attributeKey, attributeValue) {
     // changes a single attributes on a given state
@@ -700,18 +750,29 @@ export default class FRBTable extends React.Component {
       { props.exportCSVBtn }
       </ButtonGroup>    );
   }
+    
+  handleSelect(row) {
+      console.log('Table1 selected row: ')
+      console.log(row)
+      this.setState({meas: row});
+  }
+    
+  handleSelect2(row) {
+    this.setState({meas2: row});
+  }
 
   render() {
     const columns = [
-                    {
-                      dataField: 'button',
-                      formatter: this.customInfoButton.bind(this),
-                      text: '',
-                      headerTitle: false,
-                      headerStyle: (colum, colIndex) => {
-                          return { width: '60px', textAlign: 'center' };
-                      }
-                    }, {
+//                    {
+//                      dataField: 'button',
+//                      formatter: this.customInfoButton.bind(this),
+//                      text: '',
+//                      headerTitle: false,
+//                      headerStyle: (colum, colIndex) => {
+//                          return { width: '60px', textAlign: 'center' };
+//                      }
+//                    },
+                     {
                       dataField: 'OBSERVATIONID',
                       text: 'OBSERVATIONID',
                       sort: false,
@@ -754,11 +815,11 @@ export default class FRBTable extends React.Component {
       page: this.state.page,
       sizePerPage: this.state.sizePerPage,
       sizePerPageList: [ {
+        text: '5', value: 5
+      }, {
         text: '10', value: 10
       }, {
         text: '25', value: 25
-      }, {
-        text: '50', value: 50
       } ],
       prePage: 'Prev', // Previous page button text
       nextPage: 'Next', // Next page button text
@@ -787,6 +848,18 @@ export default class FRBTable extends React.Component {
       );
     }
 
+//    const selectRow = {
+//        mode: 'radio',
+//        clickToSelect: true,
+//        hideSelectAll: true,
+//        onSelect: (row, isSelect, rowIndex, e) => {
+////          if (this.state.meas == {}) {
+////            this.setState({meas: row});
+////          } else {
+////            this.setState({meas2: row});
+////          }
+//        }
+//    };
     // Define select column modal entries
     // don't recall db for each overview for now, too slow
     // <ProdIdComponent prod_id={this.state.meas.PRODUCTID} />
@@ -795,7 +868,7 @@ export default class FRBTable extends React.Component {
       <div className="reacttable">
         <Modal show={this.state.showModal} onHide={this.closeColumnDialg} dialogClassName="my-modal">
         <Modal.Header closeButton onClick={this.closeColumnDialog}>
-        <Modal.Title>Observation overview</Modal.Title>
+        <Modal.Title>Observations overview</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <table width='100%'>
@@ -804,7 +877,7 @@ export default class FRBTable extends React.Component {
               <td width='50%'>
                 <table className='standard' cellPadding='5px' width='300px'>
                   <tbody>
-                    <tr><th colSpan='3'>Product Parameters</th></tr>
+                    <tr><th colSpan='3'>Calibrator Parameters</th></tr>
                     <tr>
                       <td width='50%'><b>Observation ID</b></td>
                       <td colSpan='2'>{this.state.meas.OBSERVATIONID}</td>
@@ -832,6 +905,39 @@ export default class FRBTable extends React.Component {
                   </tbody>
                 </table>
               </td>
+            </tr>
+            <tr>
+            <td width='50%'>
+            <table className='standard' cellPadding='5px' width='300px'>
+            <tbody>
+            <tr><th colSpan='3'>Target Parameters</th></tr>
+            <tr>
+            <td width='50%'><b>Observation ID</b></td>
+            <td colSpan='2'>{this.state.meas2.OBSERVATIONID}</td>
+            </tr>
+            <tr>
+            <td width='50%'><b>Start time</b></td>
+            <td colSpan='2'>{this.state.meas2.STARTTIME}</td>
+            </tr>
+            <tr>
+            <td width='50%'><b>End time</b></td>
+            <td colSpan='2'>{this.state.meas2.ENDTIME}</td>
+            </tr>
+            <tr>
+            <td width='50%'><b>Right Ascension</b></td>
+            <td colSpan='2'>{this.state.meas2.RIGHTASCENSION}</td>
+            </tr>
+            <tr>
+            <td width='50%'><b>Declination</b></td>
+            <td colSpan='2'>{this.state.meas2.DECLINATION}</td>
+            </tr>
+            <tr>
+            <td width='50%'><b>Nr subbands</b></td>
+            <td colSpan='2'>{this.state.meas2.NR_SUBBANDS}</td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
             </tr>
           </tbody>
         </table>
@@ -867,7 +973,7 @@ export default class FRBTable extends React.Component {
           </div>
         <tr><td>Select processing pipeline:</td></tr>
         { pipelineSelect }
-        { this.state.selectedPipeline && <PipelineConfigurator lid={this.state.meas.LID} pipeline={this.state.selectedPipeline} email={this.state.email} validEmail={this.state.validEmail} description={this.state.jobDescription}/> }
+        { this.state.selectedPipeline && <PipelineConfigurator lid={this.state.meas.LID} lid2={this.state.meas2.LID}pipeline={this.state.selectedPipeline} email={this.state.email} validEmail={this.state.validEmail} description={this.state.jobDescription}/> }
       </form>
 </th></tr>
 </tbody>
@@ -879,12 +985,33 @@ export default class FRBTable extends React.Component {
         <Button type="button" onClick={this.closeColumnDialog}>Close</Button>
         </Modal.Footer>
         </Modal>
-        <BootstrapTable keyField = 'LID'
-                        data = { this.props.products }
-                        columns = { columns }
-                        pagination={ paginationFactory() }
-                        hover = { true }
-                        filter={ filterFactory() } />
+
+        <fieldset class="form-group">
+        <legend>Choose Calibrator</legend>
+        <ProductChooser
+            data = { this.props.products }
+            columns = { columns }
+            onSelect = { (row, isSelect, rowIndex, e) => this.handleSelect(row)
+            } />
+        </fieldset>
+        <fieldset class="form-group">
+        <legend>Choose Target</legend>
+        <ProductChooser
+            data = { this.props.products }
+            columns = { columns }
+            onSelect = { (row, isSelect, rowIndex, e) => this.handleSelect2(row)
+            } />
+        </fieldset>
+        <div class="col-md-4 center-block">
+        <button type='button'
+            className={ "btn btn-primary btn-lg center-block" }
+            title='Processing Configuration'
+            onClick={this.openProcessingDialog.bind(this)}
+            disabled={Object.keys(this.state.meas).length == 0 || Object.keys(this.state.meas2).length == 0}>
+            Processing Configuration
+        </button>
+        </div>
+        <p></p>
         </div>
     );
   }
