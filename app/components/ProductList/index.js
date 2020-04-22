@@ -538,8 +538,12 @@ class ProductChooser extends React.Component {
           mode: 'radio',
           clickToSelect: true,
           hideSelectAll: true,
-          onSelect: this.props.onSelect
+          onSelect: this.props.onSelect,
+          selected: []
         };
+        if (this.props.selected !== undefined) {
+          selectRow.selected.push(this.props.selected);
+        }
 
         const pagination = paginationFactory({
             page: 1,
@@ -562,7 +566,9 @@ export default class FRBTable extends React.Component {
     super(props);
     this.state = { showModal: false,
       meas: {},
+      meas_index: undefined,
       meas2: {},
+      meas2_index: undefined,
       page: 1,
       sizePerPage: 25,
       // dropdown
@@ -754,11 +760,11 @@ export default class FRBTable extends React.Component {
   handleSelect(row) {
       console.log('Table1 selected row: ')
       console.log(row)
-      this.setState({meas: row});
+      this.setState({meas: row, meas_index: row.LID});
   }
     
   handleSelect2(row) {
-    this.setState({meas2: row});
+    this.setState({meas2: row, meas2_index: row.LID});
   }
 
   render() {
@@ -991,16 +997,20 @@ export default class FRBTable extends React.Component {
         <ProductChooser
             data = { this.props.products }
             columns = { columns }
-            onSelect = { (row, isSelect, rowIndex, e) => this.handleSelect(row)
-            } />
+            onSelect = { (row) => this.handleSelect(row)
+            }
+            selected = {this.state.meas_index}
+            />
         </fieldset>
         <fieldset class="form-group">
         <legend>Choose Target</legend>
         <ProductChooser
             data = { this.props.products }
             columns = { columns }
-            onSelect = { (row, isSelect, rowIndex, e) => this.handleSelect2(row)
-            } />
+            onSelect = { (row) => this.handleSelect2(row)
+            }
+            selected = {this.state.meas2_index}
+            />
         </fieldset>
         <div class="col-md-4 center-block">
         <button type='button'
