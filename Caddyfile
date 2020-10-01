@@ -1,7 +1,8 @@
-localhost {   # Your site's address
+localhost:2015   # Your site's address
+
 # API load balancer
-reverse_proxy /sessions localhost:8000
-reverse_proxy /pipelineschemas localhost:8000
-reverse_proxy / localhost:5000
-}
+#reverse_proxy /sessions localhost:8000
+#reverse_proxy /pipelineschemas localhost:8000
+#reverse_proxy / localhost:5000
+
 
