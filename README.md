@@ -1,6 +1,5 @@
 # LOFAR LTA pipeline orchestrate Web application
 
-This project has been continued as part of [PROCESS](https://github.com/process-project/ltacat).
 This project has been forked from [ESOC-ltacat](https://github.com/EOSC-LOFAR/ltacat).
 
 The is the frontend and the db backend of the web application which can be used to run a pipeline on several data products in the LOFAR Long Term Archive (LTA).
