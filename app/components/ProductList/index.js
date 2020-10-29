@@ -280,6 +280,7 @@ class PipelineConfigurator extends React.Component {
                          method: 'POST', // *GET, POST, PUT, DELETE, etc.
                          mode: 'cors', // no-cors, cors, *same-origin
                          headers: {
+                         'user-agent': 'Default',
                          'content-type': 'application/json'
                     },
                 })
@@ -538,6 +539,7 @@ class ProductChooser extends React.Component {
           mode: 'radio',
           clickToSelect: true,
           hideSelectAll: true,
+          style: { background: 'cyan' },
           onSelect: this.props.onSelect,
           selected: []
         };

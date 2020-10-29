@@ -25,7 +25,7 @@ let findAll = async (req, res, next) => {
  AND fo.data_object = dp.object_id
  AND dp.isValid> 0
  GROUP BY pr."processIdentifier", pr."observationId", dp.subArrayPointingIdentifier
- HAVING COUNT(fo.URI) = 30 OR COUNT(fo.URI) = 237
+ HAVING COUNT(fo.URI) = 237 OR COUNT(fo.URI) = 244
 ) u
 JOIN awoper.SubArrayPointing sp ON u.subArrayPointingIdentifier = sp.subArrayPointingIdentifier
 JOIN awoper.Pointing p ON p.OBJECT_ID = sp.POINTING

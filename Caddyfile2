@@ -1,0 +1,7 @@
+http://localhost:2015 
+
+# API load balancer
+reverse_proxy /sessions http://localhost:8000
+reverse_proxy /pipelineschemas http://localhost:8000
+reverse_proxy http://localhost:5000
+

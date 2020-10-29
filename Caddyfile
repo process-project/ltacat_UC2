@@ -1,14 +1,8 @@
-{
- auto_https disable_redirects
-}
-
-localhost:2015  {
-  root * /home/ltacat_UC2
-}
+localhost
 
 # API load balancer
-#reverse_proxy /sessions localhost:8000
-#reverse_proxy /pipelineschemas localhost:8000
-#reverse_proxy / localhost:5000
+proxy /sessions localhost:8000
+proxy /pipelineschemas localhost:8000
+proxy / localhost:5000
 
 
