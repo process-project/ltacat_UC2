@@ -41,5 +41,10 @@ To run both backends (ltacat and [lofar_workflow_api](https://github.com/EOSC-LO
 ```
 caddy
 ```
+for CaddyServer v1. For version 2, either rename the file `Caddyfile2` to `Caddyfile` and run:
+```
+caddy run
+```
+or use the `--config` option the path to `Caddyfile2` with that same command.
 
 The web application is running at http://localhost:2015 after running CaddyServer.
