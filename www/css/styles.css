@@ -10,6 +10,7 @@ a:hover {
     padding-bottom: 12px;
     border-top: solid 1px #EEE;
     color: #4F6A92;
+    text-align: center;
 }
 
 .level {
@@ -69,9 +70,10 @@ input[type="search"]:focus {
 
 .slds-page-header {
   background-color: #002E49;
-    border: none;
-    color: #FFFFFF;
-    margin-top: -16px;
+  border: none;
+  color: #FFFFFF;
+  margin-top: -16px;
+  text-align: right;
 }
 
 .slds-page-header__title {
