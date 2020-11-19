@@ -8,7 +8,7 @@ class Header extends React.Component {
                     <div className="slds-col">
                         <h1 className="slds-page-header__title slds-truncate">
                             <a href="http://www.process-project.eu">
-                                <img src="pics/PROCESS_LOGO.jpg" height="90"/>
+                                <img src="pics/logo-white-just.png" height="90"/>
                             </a>
                             {this.props.text}
                         </h1>
