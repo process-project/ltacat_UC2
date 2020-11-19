@@ -6,9 +6,11 @@ class Footer extends React.Component {
       <div>
       <div className="footer slds-m-horizontal--large slds-m-top--xx-large">
         <div>
+          <br/>
           <h2>Version Notes</h2>
           <p>Version 1.0: This catalogue provides access to the LOFAR database and allows for processing the LOFAR data directly from the catalog.</p>
         </div>
+        <br/>
         <div className="flex-container">
           <div className="flex-item">
             <a href="https://www.esciencecenter.nl/">
@@ -59,8 +61,14 @@ class Footer extends React.Component {
         </div>
       </div>
       <div className="page-footer" role="banner">
-        <div className="slds-grid  slds-grid--vertical-align-center">
-          <p>This project received funding from the Netherlands eScience Center under grant AA-ALERT (027.015.G09), and from the European Research Council under the European Union's Seventh Framework Programme (FP/2007-2013) / ERC Grant Agreement n. 617199.</p>
+        <div className="flex-container">
+          <div className="flex-item">
+            <a href="https://www.esciencecenter.nl/">
+            <img src="pics/comision-europea.png" alt="" className="img-responsive" />
+            </a>
+          </div>
+          <div className="slds-grid  slds-grid--vertical-align-center">
+          <p>This project has received funding from the European Union’s Horizon 2020 research and innovation programme under Grant Agreement 777533.</p>
         </div>
       </div>
       </div>
