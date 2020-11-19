@@ -73,11 +73,10 @@ input[type="search"]:focus {
   border: none;
   color: #FFFFFF;
   margin-top: -16px;
-  text-align: right;
 }
 
 .slds-page-header__title {
-    font-size: 48px;
+    font-size: 52px;
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
 }
