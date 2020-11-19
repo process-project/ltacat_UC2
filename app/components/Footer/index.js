@@ -68,8 +68,9 @@ class Footer extends React.Component {
             </a>
           </div>
           <div className="slds-grid  slds-grid--vertical-align-center">
-          <p>This project has received funding from the European Union’s Horizon 2020 research and innovation programme under Grant Agreement 777533.</p>
-        </div>
+            <p>This project has received funding from the European Union’s Horizon 2020 research and innovation programme under Grant Agreement 777533.</p>
+          </div>
+       </div>
       </div>
       </div>
         );
@@ -77,3 +78,4 @@ class Footer extends React.Component {
 };
 
 export default Footer;
+
