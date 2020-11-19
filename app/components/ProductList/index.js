@@ -1021,7 +1021,7 @@ export default class FRBTable extends React.Component {
             title='Select workflow'
             onClick={this.openProcessingDialog.bind(this)}
             disabled={Object.keys(this.state.meas).length == 0 || Object.keys(this.state.meas2).length == 0}>
-            Processing Configuration
+            Select Workflow
         </button>
         </div>
         <p></p>
