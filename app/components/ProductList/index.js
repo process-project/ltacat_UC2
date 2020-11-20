@@ -1015,13 +1015,13 @@ export default class FRBTable extends React.Component {
             selected = {this.state.meas2_index}
             />
         </fieldset>
-        <div class="col-md-4 center-block">
+        <div class="center-block">
         <button type='button'
             className={ "btn btn-primary btn-lg center-block" }
-            title='Processing Configuration'
+            title='Select workflow'
             onClick={this.openProcessingDialog.bind(this)}
             disabled={Object.keys(this.state.meas).length == 0 || Object.keys(this.state.meas2).length == 0}>
-            Processing Configuration
+            Select Workflow
         </button>
         </div>
         <p></p>
