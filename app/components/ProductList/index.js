@@ -224,6 +224,7 @@ class PipelineConfigurator extends React.Component {
       config: {},
       error: '',
       validSubForm: true,
+      observation: ""
     };
     this.updateDerived = this.updateDerived.bind(this);
     this.submit = this.submit.bind(this);
@@ -253,7 +254,7 @@ class PipelineConfigurator extends React.Component {
     const email = this.props.email
     const description = this.props.description
     const submitEndpoint = '/sessions'
-    let observation
+    //let observation
     fetch('/product/' + this.props.lid, {
       headers: {
           'content-type': 'application/json'
@@ -263,7 +264,8 @@ class PipelineConfigurator extends React.Component {
                          else
                            throw 'Server returned ' + response.statusText})
       .then(srmuris => {
-        observation = srmuris.products.map((d) => d.URI).join('|');
+        this.setState({ observation: srmuris.products.map((d) => d.URI).join('|') });
+        //observation = srmuris.products.map((d) => d.URI).join('|');
       })
     fetch('/product/' + this.props.lid2, {
             headers: {
@@ -274,7 +276,7 @@ class PipelineConfigurator extends React.Component {
                     else
                     throw 'Server returned ' + response.statusText})
       .then(srmuris => {
-            const body = {pipeline, email, description, config: this.state.config, observation, observation2: srmuris.products.map((d) => d.URI).join('|')};
+            const body = {pipeline, email, description, config: this.state.config, observation: this.state.observation, observation2: srmuris.products.map((d) => d.URI).join('|')};
             return fetch(submitEndpoint, {
                          body: JSON.stringify(body),
                          method: 'POST', // *GET, POST, PUT, DELETE, etc.
